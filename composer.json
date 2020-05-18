@@ -1,0 +1,41 @@
+{
+    "name": "stankiewiczpl/laravel-forms",
+    "description": "Laravel exntended forms",
+    "keywords": [
+        "laravel",
+        "laravel forms",
+        "laravel custom fields"
+    ],
+    "homepage": "https://github.com/stankiewiczpl/laravel-forms",
+    "authors": [
+        {
+            "name": "Piotr Stankiewicz",
+            "email": "stankiewicz.opole@gmail.com"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=7.1.3",
+        "laravelcollective/html": "^6.0",
+        "kris/laravel-form-builder": "^1.30",
+        "kalnoy/nestedset": "^5.0"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "Stankiewiczpl\\LaravelForms\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Stankiewiczpl\\LaravelForms\\LaravelFormsServiceProvider",
+                "Stankiewiczpl\\LaravelForms\\EventServiceProvider"
+            ]
+        },
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}
