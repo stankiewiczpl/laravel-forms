@@ -54,13 +54,13 @@ class Image extends Model
                     $constraint->upsize();
                 });
 
-                $watermark = \Intervention\Image\Facades\Image::make(public_path('wtrpl-logo-desktop.png'));
+              //  $watermark = \Intervention\Image\Facades\Image::make(public_path('wtrpl-logo-desktop.png'));
                 //$watermark->resize(ceil($w/7));
-                $watermark->resize(ceil($w/7), null, function ($constraint) {
-                    $constraint->aspectRatio();
-                    $constraint->upsize();
-                });
-                $img->insert($watermark, 'bottom-right', 10, 10);
+             //   $watermark->resize(ceil($w/7), null, function ($constraint) {
+             //       $constraint->aspectRatio();
+             //       $constraint->upsize();
+             //   });
+             //   $img->insert($watermark, 'bottom-right', 10, 10);
                 //$img->insert(public_path('wtrpl-logo-desktop.png'), 'bottom-right', 10, 10);
                 $img->save($destination_dir_path.'/'.$this->filename.'.'.$format,$quality,$format);
 

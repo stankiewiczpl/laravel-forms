@@ -20,7 +20,7 @@
         "kris/laravel-form-builder": "^1.30",
         "kalnoy/nestedset": "^5.0",
         "codex-team/editor.js": "^2.0",
-        "proengsoft/laravel-jsvalidation": "^2.5"
+        "proengsoft/laravel-jsvalidation": "^4.0"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
@@ -35,8 +35,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Stankiewiczpl\\LaravelForms\\LaravelFormsServiceProvider",
-                "Stankiewiczpl\\LaravelForms\\EventServiceProvider"
+                "Stankiewiczpl\\LaravelForms\\LaravelFormsServiceProvider"
             ]
         },
         "branch-alias": {
