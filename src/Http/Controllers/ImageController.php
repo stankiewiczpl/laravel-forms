@@ -3,7 +3,7 @@
 namespace Stankiewiczpl\LaravelForms\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Image as ImageModel;
+use Stankiewiczpl\LaravelForms\Models\Image as ImageModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
@@ -21,8 +21,8 @@ class ImageController extends Controller
         $collection = $request->header('collection');
         $uuid = Str::uuid()->toString();
         try {
-            $file = Arr::first($request->file('gallery.' . $collection.'.files'));
-            //$image = Arr::first($request->file('images'));
+            $file = Arr::first($request->file( $collection.'.files'));
+
 
             $src = Image::make($file)
                 ->widen(800, function ($constraint) {
@@ -30,7 +30,7 @@ class ImageController extends Controller
                 });
 
             Storage::disk('public')->put('uploads/' . $uuid . '.' . $this->extension, $src->encode());
-            $image = \Stankiewiczpl\LaravelForms\Models\Image::create(
+            $image = ImageModel::create(
                 [
                     'uuid' => $uuid,
                     'directory' => 'images',
@@ -41,16 +41,11 @@ class ImageController extends Controller
                     'collection' => $collection
                 ]
             )->user()->associate($request->user());
-            //return response()->json($image->uuid);
-            return response($image->uuid, 200)
-                ->header('Content-Type', 'text/plain');
+            return response($image->uuid, 200)->header('Content-Type', 'text/plain');
         } catch (\Exception $exception) {
             Log::debug($exception->getMessage());
-            abort(404);
+            abort(500);
         }
-
-
-
     }
 
     public function preview($uuid)
@@ -59,6 +54,8 @@ class ImageController extends Controller
         if (!file_exists($image->path)) {
             abort(404);
         }
+
+
         return Image::make($image->path)
             ->fit(245, 150, function (Constraint $constraint) {
                 $constraint->upsize();

@@ -3,9 +3,10 @@
 namespace Stankiewiczpl\LaravelForms\Traits;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Stankiewiczpl\LaravelForms\Models\Image;
 
 trait ModelHasGallery
@@ -13,50 +14,40 @@ trait ModelHasGallery
     public static function bootModelHasGallery()
     {
         static::saved(function (Model $model) {
-
-            foreach (request()->input('gallery',[]) as $collection=>$gallery)
-            {
-              // dump($collection);
-              // dump($gallery);
-               self::saveGallery($gallery,$model);
+            foreach (request()->all() as $attribute => $value) {
+                if (Str::startsWith($attribute, 'gallery_')) {
+                    $model->saveGalleryImages($attribute);
+                }
             }
-          //  dd(request()->input('gallery'));
-          //  dd('end');
         });
     }
 
-    public function gallery()
+    public function gallery(): MorphMany
     {
-        return $this->morphMany(Image::class, 'imageable')->defaultOrder();
+        return $this->morphMany(Image::class, 'model_images')->defaultOrder();
     }
 
-    public static function saveGallery($gallery,$model)
+    protected function saveGalleryImages($attribute):void
     {
-
-        $sortOrder = Arr::get($gallery,'order') ? explode(',', Arr::get($gallery,'order')) : [];
-        $images = Arr::get($gallery,'files',[]);
-
-
+        $sortOrder = Arr::get(request($attribute), 'order') ? explode(',', Arr::get(request($attribute), 'order')) : [];
+        $images = Arr::get(request($attribute), 'files', []);
         $items = count($sortOrder) ? $sortOrder : $images;
-        //dump($items);
-        $data = [];
-        if (count($items)) {
-            foreach ($items as $uuid) {
-                $image = Image::query()->where('uuid',$uuid)->get()->first();
 
+        if (count($items)) {
+            $data = [];
+            foreach ($items as $uuid) {
+                $image = Image::query()->where('uuid', $uuid)->get()->first();
                 if ($image) {
                     try {
-                        $model->gallery()->save($image);
+                        $this->gallery()->save($image);
                         $data[] = ['id' => $image->id];
                     } catch (\Exception $exception) {
-                        Log::debug($exception->getMessage());
+                        Log::warning($exception->getMessage());
                         continue;
                     }
                 }
             }
-            //dump($data);
-            $model->gallery()->rebuildTree($data);
+            $this->gallery()->rebuildTree($data);
         }
-
     }
 }

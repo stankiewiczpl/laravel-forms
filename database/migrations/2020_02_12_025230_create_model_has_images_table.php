@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateImagesTable extends Migration
+class CreateModelHasImagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateImagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('images', function (Blueprint $table) {
+        Schema::create('model_has_images', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->uuid('uuid');
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->nullableMorphs('imageable');
+            $table->nullableMorphs('model_images');
             $table->nestedSet();
             $table->string('directory');
             $table->string('filename');
@@ -39,6 +39,6 @@ class CreateImagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('images');
+        Schema::dropIfExists('model_has_images');
     }
 }

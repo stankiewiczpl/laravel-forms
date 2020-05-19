@@ -7,17 +7,23 @@
 @if ($showLabel && $options['label'] !== false && $options['label_show'])
     {!! Form::customLabel($name, $options['label'], $options['label_attr']) !!}
 @endif
+            {{--
             <input type="file"
                    accept="image/*"
-                   class="filepond_{{\Illuminate\Support\Str::slug($name)}} invisible"
+                   class="filepond_{{$name}} invisible"
                    name="gallery[{{ $name }}][files][]"
                    data-max-file-size="3MB"
                    data-label-file-loading="ładowanie"
                    data-label-idle='Przeciągnij zdjęcia lub <span class="filepond--label-action"> wybierz </span>'
                    >
 
-
+            <input type="file" accept="image/*" class="filepond_{{$name}} invisible" name="gallery[{{ $name }}][files][]" data-max-file-size="3MB" data-label-file-loading="ładowanie" data-label-idle='Przeciągnij zdjęcia lub <span class="filepond--label-action"> wybierz </span>'>
             <input type="text" name="gallery[{{$name}}][order]">
+             --}}
+
+
+            <input type="file" accept="image/*" class="filepond_{{$name}} invisible" name="{{ $name }}[files][]" data-max-file-size="3MB" data-label-file-loading="ładowanie" data-label-idle='Przeciągnij zdjęcia lub <span class="filepond--label-action"> wybierz </span>'>
+            <input type="hidden" name="{{ $name }}[order]">
 
 @if ($showLabel && $showField)
     @if ($options['wrapper'] !== false)
@@ -79,16 +85,15 @@
 
                 ],
                 onreorderfiles: function (elements) {
-
                     let newOrder = _.values(_.mapValues(elements, function (element) {
                         return element.serverId;
                     }));
-                    console.log(newOrder);
-                    $('input[name="gallery[{{$name}}][order]"]').val(newOrder);
+                   // $('input[name="gallery[{{$name}}][order]"]').val(newOrder);
+                    $('input[name="{{$name}}[order]"]').val(newOrder);
 
                 }
             });
-            $('.filepond_{{\Illuminate\Support\Str::slug($name)}}').removeClass('invisible');
+            $('.filepond_{{$name}}').removeClass('invisible');
         });
     </script>
 @endpush

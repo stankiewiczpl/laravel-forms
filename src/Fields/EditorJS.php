@@ -1,19 +1,23 @@
 <?php
 
+
 namespace Stankiewiczpl\LaravelForms\Fields;
+
 
 use Kris\LaravelFormBuilder\Fields\FormField;
 
-class Gallery extends FormField
+class EditorJS extends FormField
 {
     protected function getTemplate()
     {
-        return 'forms::fields.gallery';
+        return 'forms::fields.editorjs';
     }
 
     public function getDefaultValue($default = null)
     {
-        return $this->parent->getModel()->gallery()->where('collection',$this->getNameKey())->get();
+        $block =  $this->parent->getModel()->blocks()->where('field',$this->getNameKey())->first();
+
+        return $block->blocks;
     }
 
 }

@@ -10,14 +10,16 @@ class Image extends Model
 {
     use NodeTrait;
 
+    protected $table = 'model_has_images';
+
     protected $fillable = ['uuid','directory','filename','extension','title','flag','collection'];
 
     protected function getScopeAttributes()
     {
-        return ['imageable_type','imageable_id'];
+        return ['model_images_type','model_images_id'];
     }
 
-    public function imageable()
+    public function model_images()
     {
         return $this->morphTo();
     }
