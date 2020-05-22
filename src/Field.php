@@ -2,7 +2,6 @@
 
 namespace Stankiewiczpl\LaravelForms;
 
-
 class Field
 {
     // Simple fields

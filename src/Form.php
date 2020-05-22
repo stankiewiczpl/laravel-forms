@@ -3,7 +3,6 @@
 
 namespace Stankiewiczpl\LaravelForms;
 
-
 use Proengsoft\JsValidation\Facades\JsValidatorFacade;
 
 class Form extends \Kris\LaravelFormBuilder\Form
@@ -15,6 +14,6 @@ class Form extends \Kris\LaravelFormBuilder\Form
         $rules = $formFields->getRules();
         $attributes = $formFields->getAttributes();
         $messages = $formFields->getMessages();
-        return  JsValidatorFacade::make($rules,$attributes,$messages,'#'.$this->getFormOption('id'));
+        return  JsValidatorFacade::make($rules, $attributes, $messages, '#'.$this->getFormOption('id'));
     }
 }

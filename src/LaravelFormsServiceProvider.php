@@ -25,8 +25,6 @@ class LaravelFormsServiceProvider extends ServiceProvider
         $this->publishes([__DIR__.'/../database/migrations/' => database_path('migrations')], 'migrations');
         $this->publishes([__DIR__.'/../resources/views' => resource_path('views/vendor/laravel-forms'),]);
         $this->publishes([__DIR__.'/config/config.php' => config_path('laravel-forms.php')]);
-
-
     }
 
     public function register()
@@ -36,6 +34,6 @@ class LaravelFormsServiceProvider extends ServiceProvider
 
     private function bootValidationRules()
     {
-        Validator::extend('editorjs', '\\Stankiewiczpl\\LaravelForms\\Rules\\EditorJs@validate','Pole :attribute jest nieprawidłowe.');
+        Validator::extend('editorjs', '\\Stankiewiczpl\\LaravelForms\\Rules\\EditorJs@validate', 'Pole :attribute jest nieprawidłowe.');
     }
 }

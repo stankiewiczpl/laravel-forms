@@ -13,7 +13,6 @@ class Gallery extends FormField
 
     public function getDefaultValue($default = null)
     {
-        return $this->parent->getModel()->gallery()->where('collection',$this->getNameKey())->get();
+        return $this->parent->getModel()->gallery()->where('collection', $this->getNameKey())->get();
     }
-
 }

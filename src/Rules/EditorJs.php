@@ -25,7 +25,7 @@ class EditorJs implements Rule
      */
     public function passes($attribute, $value)
     {
-        return $this->validate($attribute,$value);
+        return $this->validate($attribute, $value);
     }
 
     /**
@@ -38,9 +38,8 @@ class EditorJs implements Rule
         return trans('The :attribute is invalid');
     }
 
-    public function validate($attribute,$value)
+    public function validate($attribute, $value)
     {
-
         try {
             $config = json_encode(config('laravel-forms.editorjs.render'));
             new \EditorJS\EditorJS($value, $config);
@@ -50,5 +49,4 @@ class EditorJs implements Rule
             return false;
         }
     }
-
 }

@@ -20,8 +20,6 @@ class CreateModelHasBlocksTable extends Migration
             $table->longText('blocks')->nullable();
             $table->timestamps();
             $table->softDeletes();
-
-
         });
     }
 

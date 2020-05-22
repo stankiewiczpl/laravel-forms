@@ -21,7 +21,7 @@ class ImageController extends Controller
         $collection = $request->header('collection');
         $uuid = Str::uuid()->toString();
         try {
-            $file = Arr::first($request->file( $collection.'.files'));
+            $file = Arr::first($request->file($collection.'.files'));
 
 
             $src = Image::make($file)
@@ -50,7 +50,7 @@ class ImageController extends Controller
 
     public function preview($uuid)
     {
-        $image = \Stankiewiczpl\LaravelForms\Models\Image::query()->where('uuid',$uuid)->firstOrFail();
+        $image = \Stankiewiczpl\LaravelForms\Models\Image::query()->where('uuid', $uuid)->firstOrFail();
         if (!file_exists($image->path)) {
             abort(404);
         }
@@ -61,12 +61,11 @@ class ImageController extends Controller
                 $constraint->upsize();
             })
             ->response('jpg', 60);
-
     }
 
     public function delete(Request $request)
     {
-        ImageModel::query()->where('uuid',$request->uuid)->delete();
+        ImageModel::query()->where('uuid', $request->uuid)->delete();
         return response()->json();
     }
 }

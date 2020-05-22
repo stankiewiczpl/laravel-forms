@@ -28,7 +28,7 @@ trait ModelHasBlocks
 
     protected function saveBlocks($attribute):void
     {
-        $this->blocks()->where('field',$attribute)->delete();
+        $this->blocks()->where('field', $attribute)->delete();
         $this->blocks()->create(['blocks'=>request()->input($attribute),'field'=>$attribute]);
     }
 }
